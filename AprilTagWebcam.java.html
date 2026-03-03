@@ -1,0 +1,101 @@
+<html>
+<head>
+<title>AprilTagWebcam.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+AprilTagWebcam.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">org</span><span class="s2">.</span><span class="s1">firstinspires</span><span class="s2">.</span><span class="s1">ftc</span><span class="s2">.</span><span class="s1">teamcode</span><span class="s2">.</span><span class="s1">mechanisms</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">Size</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">qualcomm</span><span class="s2">.</span><span class="s1">robotcore</span><span class="s2">.</span><span class="s1">hardware</span><span class="s2">.</span><span class="s1">HardwareMap</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">firstinspires</span><span class="s2">.</span><span class="s1">ftc</span><span class="s2">.</span><span class="s1">robotcore</span><span class="s2">.</span><span class="s1">external</span><span class="s2">.</span><span class="s1">Telemetry</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">firstinspires</span><span class="s2">.</span><span class="s1">ftc</span><span class="s2">.</span><span class="s1">robotcore</span><span class="s2">.</span><span class="s1">external</span><span class="s2">.</span><span class="s1">hardware</span><span class="s2">.</span><span class="s1">camera</span><span class="s2">.</span><span class="s1">WebcamName</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">firstinspires</span><span class="s2">.</span><span class="s1">ftc</span><span class="s2">.</span><span class="s1">robotcore</span><span class="s2">.</span><span class="s1">external</span><span class="s2">.</span><span class="s1">navigation</span><span class="s2">.</span><span class="s1">AngleUnit</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">firstinspires</span><span class="s2">.</span><span class="s1">ftc</span><span class="s2">.</span><span class="s1">robotcore</span><span class="s2">.</span><span class="s1">external</span><span class="s2">.</span><span class="s1">navigation</span><span class="s2">.</span><span class="s1">DistanceUnit</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">firstinspires</span><span class="s2">.</span><span class="s1">ftc</span><span class="s2">.</span><span class="s1">vision</span><span class="s2">.</span><span class="s1">VisionPortal</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">firstinspires</span><span class="s2">.</span><span class="s1">ftc</span><span class="s2">.</span><span class="s1">vision</span><span class="s2">.</span><span class="s1">apriltag</span><span class="s2">.</span><span class="s1">AprilTagDetection</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">firstinspires</span><span class="s2">.</span><span class="s1">ftc</span><span class="s2">.</span><span class="s1">vision</span><span class="s2">.</span><span class="s1">apriltag</span><span class="s2">.</span><span class="s1">AprilTagProcessor</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">sql</span><span class="s2">.</span><span class="s1">Array</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">ArrayList</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">List</span><span class="s2">;</span>
+
+<span class="s0">public class </span><span class="s1">AprilTagWebcam </span><span class="s2">{</span>
+    <span class="s0">private </span><span class="s1">AprilTagProcessor aprilTagProcessor</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">VisionPortal visionPortal</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">AprilTagDetection</span><span class="s2">&gt; </span><span class="s1">detectedTags </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ArrayList</span><span class="s2">&lt;&gt;();</span>
+    <span class="s0">private </span><span class="s1">Telemetry telemetry</span><span class="s2">;</span>
+    <span class="s0">public void </span><span class="s1">init</span><span class="s2">(</span><span class="s1">HardwareMap hwMap</span><span class="s2">, </span><span class="s1">Telemetry telemetry</span><span class="s2">) {</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">telemetry </span><span class="s2">= </span><span class="s1">telemetry</span><span class="s2">;</span>
+
+        <span class="s1">aprilTagProcessor </span><span class="s2">= </span><span class="s0">new </span><span class="s1">AprilTagProcessor</span><span class="s2">.</span><span class="s1">Builder</span><span class="s2">()</span>
+                <span class="s2">.</span><span class="s1">setDrawTagID</span><span class="s2">(</span><span class="s0">true</span><span class="s2">)</span>
+                <span class="s2">.</span><span class="s1">setDrawTagOutline</span><span class="s2">(</span><span class="s0">true</span><span class="s2">)</span>
+                <span class="s2">.</span><span class="s1">setDrawAxes</span><span class="s2">(</span><span class="s0">true</span><span class="s2">)</span>
+                <span class="s2">.</span><span class="s1">setDrawCubeProjection</span><span class="s2">(</span><span class="s0">true</span><span class="s2">)</span>
+                <span class="s2">.</span><span class="s1">setOutputUnits</span><span class="s2">(</span><span class="s1">DistanceUnit</span><span class="s2">.</span><span class="s1">CM</span><span class="s2">, </span><span class="s1">AngleUnit</span><span class="s2">.</span><span class="s1">DEGREES</span><span class="s2">)</span>
+                <span class="s2">.</span><span class="s1">build</span><span class="s2">();</span>
+
+        <span class="s1">VisionPortal</span><span class="s2">.</span><span class="s1">Builder builder </span><span class="s2">= </span><span class="s0">new </span><span class="s1">VisionPortal</span><span class="s2">.</span><span class="s1">Builder</span><span class="s2">();</span>
+        <span class="s1">builder</span><span class="s2">.</span><span class="s1">setCamera</span><span class="s2">(</span><span class="s1">hwMap</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">WebcamName</span><span class="s2">.</span><span class="s0">class</span><span class="s2">, </span><span class="s3">&quot;Camarita&quot;</span><span class="s2">));</span>
+        <span class="s1">builder</span><span class="s2">.</span><span class="s1">setCameraResolution</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Size</span><span class="s2">(</span><span class="s4">640</span><span class="s2">,</span><span class="s4">480</span><span class="s2">));</span>
+        <span class="s1">builder</span><span class="s2">.</span><span class="s1">addProcessor</span><span class="s2">(</span><span class="s1">aprilTagProcessor</span><span class="s2">);</span>
+
+        <span class="s1">visionPortal </span><span class="s2">= </span><span class="s1">builder</span><span class="s2">.</span><span class="s1">build</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">update</span><span class="s2">() {</span>
+        <span class="s1">detectedTags </span><span class="s2">= </span><span class="s1">aprilTagProcessor</span><span class="s2">.</span><span class="s1">getDetections</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">AprilTagDetection</span><span class="s2">&gt; </span><span class="s1">getDetectedTags</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">detectedTags</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">displayDetectionTelemetry</span><span class="s2">(</span><span class="s1">AprilTagDetection detectedId</span><span class="s2">) {</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">detectedId </span><span class="s2">== </span><span class="s0">null </span><span class="s2">) {</span><span class="s0">return</span><span class="s2">;}</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">detectedId</span><span class="s2">.</span><span class="s1">metadata </span><span class="s2">!= </span><span class="s0">null</span><span class="s2">) {</span>
+            <span class="s1">telemetry</span><span class="s2">.</span><span class="s1">addLine</span><span class="s2">(</span><span class="s1">String</span><span class="s2">.</span><span class="s1">format</span><span class="s2">(</span><span class="s3">&quot;</span><span class="s0">\n</span><span class="s3">==== (ID %d) %s&quot;</span><span class="s2">, </span><span class="s1">detectedId</span><span class="s2">.</span><span class="s1">id</span><span class="s2">, </span><span class="s1">detectedId</span><span class="s2">.</span><span class="s1">metadata</span><span class="s2">.</span><span class="s1">name</span><span class="s2">));</span>
+            <span class="s1">telemetry</span><span class="s2">.</span><span class="s1">addLine</span><span class="s2">(</span><span class="s1">String</span><span class="s2">.</span><span class="s1">format</span><span class="s2">(</span><span class="s3">&quot;XYZ %6.1f %6.1f %6.1f  (inch)&quot;</span><span class="s2">, </span><span class="s1">detectedId</span><span class="s2">.</span><span class="s1">ftcPose</span><span class="s2">.</span><span class="s1">x</span><span class="s2">, </span><span class="s1">detectedId</span><span class="s2">.</span><span class="s1">ftcPose</span><span class="s2">.</span><span class="s1">y</span><span class="s2">, </span><span class="s1">detectedId</span><span class="s2">.</span><span class="s1">ftcPose</span><span class="s2">.</span><span class="s1">z</span><span class="s2">));</span>
+            <span class="s1">telemetry</span><span class="s2">.</span><span class="s1">addLine</span><span class="s2">(</span><span class="s1">String</span><span class="s2">.</span><span class="s1">format</span><span class="s2">(</span><span class="s3">&quot;PRY %6.1f %6.1f %6.1f  (deg)&quot;</span><span class="s2">, </span><span class="s1">detectedId</span><span class="s2">.</span><span class="s1">ftcPose</span><span class="s2">.</span><span class="s1">pitch</span><span class="s2">, </span><span class="s1">detectedId</span><span class="s2">.</span><span class="s1">ftcPose</span><span class="s2">.</span><span class="s1">roll</span><span class="s2">, </span><span class="s1">detectedId</span><span class="s2">.</span><span class="s1">ftcPose</span><span class="s2">.</span><span class="s1">yaw</span><span class="s2">));</span>
+            <span class="s1">telemetry</span><span class="s2">.</span><span class="s1">addLine</span><span class="s2">(</span><span class="s1">String</span><span class="s2">.</span><span class="s1">format</span><span class="s2">(</span><span class="s3">&quot;RBE %6.1f %6.1f %6.1f  (inch, deg, deg)&quot;</span><span class="s2">, </span><span class="s1">detectedId</span><span class="s2">.</span><span class="s1">ftcPose</span><span class="s2">.</span><span class="s1">range</span><span class="s2">, </span><span class="s1">detectedId</span><span class="s2">.</span><span class="s1">ftcPose</span><span class="s2">.</span><span class="s1">bearing</span><span class="s2">, </span><span class="s1">detectedId</span><span class="s2">.</span><span class="s1">ftcPose</span><span class="s2">.</span><span class="s1">elevation</span><span class="s2">));</span>
+        <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+            <span class="s1">telemetry</span><span class="s2">.</span><span class="s1">addLine</span><span class="s2">(</span><span class="s1">String</span><span class="s2">.</span><span class="s1">format</span><span class="s2">(</span><span class="s3">&quot;</span><span class="s0">\n</span><span class="s3">==== (ID %d) Unknown&quot;</span><span class="s2">, </span><span class="s1">detectedId</span><span class="s2">.</span><span class="s1">id</span><span class="s2">));</span>
+            <span class="s1">telemetry</span><span class="s2">.</span><span class="s1">addLine</span><span class="s2">(</span><span class="s1">String</span><span class="s2">.</span><span class="s1">format</span><span class="s2">(</span><span class="s3">&quot;Center %6.0f %6.0f   (pixels)&quot;</span><span class="s2">, </span><span class="s1">detectedId</span><span class="s2">.</span><span class="s1">center</span><span class="s2">.</span><span class="s1">x</span><span class="s2">, </span><span class="s1">detectedId</span><span class="s2">.</span><span class="s1">center</span><span class="s2">.</span><span class="s1">y</span><span class="s2">));</span>
+        <span class="s2">}</span>
+
+
+
+    <span class="s2">}</span>
+
+     <span class="s0">public </span><span class="s1">AprilTagDetection getTagBySpecificId</span><span class="s2">(</span><span class="s0">int </span><span class="s1">id</span><span class="s2">) {</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">AprilTagDetection detection</span><span class="s2">: </span><span class="s1">detectedTags</span><span class="s2">) {</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">detection</span><span class="s2">.</span><span class="s1">id </span><span class="s2">== </span><span class="s1">id</span><span class="s2">){</span>
+                <span class="s0">return </span><span class="s1">detection</span><span class="s2">;</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+        <span class="s0">return null</span><span class="s2">;</span>
+     <span class="s2">}</span>
+      <span class="s0">public void </span><span class="s1">stop </span><span class="s2">() {</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">visionPortal </span><span class="s2">!= </span><span class="s0">null</span><span class="s2">) {</span>
+            <span class="s1">visionPortal</span><span class="s2">.</span><span class="s1">close</span><span class="s2">();</span>
+        <span class="s2">}</span>
+      <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

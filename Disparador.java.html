@@ -17,78 +17,37 @@
 <font face="Arial, Helvetica" color="#000000">
 Disparador.java</font>
 </center></td></tr></table>
-<pre><span class="s0">package </span><span class="s1">org</span><span class="s2">.</span><span class="s1">firstinspires</span><span class="s2">.</span><span class="s1">ftc</span><span class="s2">.</span><span class="s1">teamcode</span><span class="s2">.</span><span class="s1">mechanisms</span><span class="s2">;</span>
-
-<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">qualcomm</span><span class="s2">.</span><span class="s1">robotcore</span><span class="s2">.</span><span class="s1">eventloop</span><span class="s2">.</span><span class="s1">opmode</span><span class="s2">.</span><span class="s1">OpMode</span><span class="s2">;</span>
+<pre><span class="s0">package </span><span class="s1">org</span><span class="s2">.</span><span class="s1">firstinspires</span><span class="s2">.</span><span class="s1">ftc</span><span class="s2">.</span><span class="s1">teamcode</span><span class="s2">.</span><span class="s1">DriverHub</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">qualcomm</span><span class="s2">.</span><span class="s1">robotcore</span><span class="s2">.</span><span class="s1">eventloop</span><span class="s2">.</span><span class="s1">opmode</span><span class="s2">.</span><span class="s1">LinearOpMode</span><span class="s2">;</span>
 <span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">qualcomm</span><span class="s2">.</span><span class="s1">robotcore</span><span class="s2">.</span><span class="s1">eventloop</span><span class="s2">.</span><span class="s1">opmode</span><span class="s2">.</span><span class="s1">TeleOp</span><span class="s2">;</span>
 <span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">qualcomm</span><span class="s2">.</span><span class="s1">robotcore</span><span class="s2">.</span><span class="s1">hardware</span><span class="s2">.</span><span class="s1">DcMotor</span><span class="s2">;</span>
 <span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">qualcomm</span><span class="s2">.</span><span class="s1">robotcore</span><span class="s2">.</span><span class="s1">hardware</span><span class="s2">.</span><span class="s1">DcMotorEx</span><span class="s2">;</span>
-<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">qualcomm</span><span class="s2">.</span><span class="s1">robotcore</span><span class="s2">.</span><span class="s1">hardware</span><span class="s2">.</span><span class="s1">DcMotorSimple</span><span class="s2">;</span>
-<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">qualcomm</span><span class="s2">.</span><span class="s1">robotcore</span><span class="s2">.</span><span class="s1">hardware</span><span class="s2">.</span><span class="s1">PIDFCoefficients</span><span class="s2">;</span>
 
-<span class="s1">@TeleOp</span><span class="s2">(</span><span class="s1">name </span><span class="s2">= </span><span class="s3">&quot;Disparador TeleOp&quot;</span><span class="s2">)</span>
-<span class="s0">public class </span><span class="s1">Disparador </span><span class="s0">extends </span><span class="s1">OpMode </span><span class="s2">{</span>
+<span class="s1">@TeleOp</span><span class="s2">(</span><span class="s1">name </span><span class="s2">= </span><span class="s3">&quot;Disparador&quot;</span><span class="s2">)</span>
+<span class="s0">public class </span><span class="s1">Disparador </span><span class="s0">extends </span><span class="s1">LinearOpMode </span><span class="s2">{</span>
 
-    <span class="s0">public </span><span class="s1">DcMotorEx flywheelMotor</span><span class="s2">;</span>
-
-    <span class="s4">// Velocidades tuneadas — ajusta estos valores con tu FlywheelTuner</span>
-    <span class="s0">public static double </span><span class="s1">HIGH_VELOCITY </span><span class="s2">= </span><span class="s5">1500</span><span class="s2">;</span>
-    <span class="s0">public static double </span><span class="s1">LOW_VELOCITY  </span><span class="s2">= </span><span class="s5">900</span><span class="s2">;</span>
-
-    <span class="s4">// Coeficientes PIDF — pon aquí los valores que encontraste con el tuner</span>
-    <span class="s0">public static double </span><span class="s1">F </span><span class="s2">= </span><span class="s5">0</span><span class="s2">;</span>
-    <span class="s0">public static double </span><span class="s1">P </span><span class="s2">= </span><span class="s5">0</span><span class="s2">;</span>
-
-    <span class="s0">private boolean </span><span class="s1">flywheelActive </span><span class="s2">= </span><span class="s0">false</span><span class="s2">;</span>
-    <span class="s0">private double  </span><span class="s1">curTargetVelocity </span><span class="s2">= </span><span class="s1">HIGH_VELOCITY</span><span class="s2">;</span>
+    <span class="s1">DcMotorEx motor3</span><span class="s2">;</span>
 
     <span class="s1">@Override</span>
-    <span class="s0">public void </span><span class="s1">init</span><span class="s2">() {</span>
-        <span class="s1">flywheelMotor </span><span class="s2">= </span><span class="s1">hardwareMap</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">DcMotorEx</span><span class="s2">.</span><span class="s0">class</span><span class="s2">, </span><span class="s3">&quot;motorDisparador&quot;</span><span class="s2">);</span>
-        <span class="s1">flywheelMotor</span><span class="s2">.</span><span class="s1">setMode</span><span class="s2">(</span><span class="s1">DcMotor</span><span class="s2">.</span><span class="s1">RunMode</span><span class="s2">.</span><span class="s1">RUN_USING_ENCODER</span><span class="s2">);</span>
-        <span class="s1">flywheelMotor</span><span class="s2">.</span><span class="s1">setDirection</span><span class="s2">(</span><span class="s1">DcMotorSimple</span><span class="s2">.</span><span class="s1">Direction</span><span class="s2">.</span><span class="s1">REVERSE</span><span class="s2">);</span>
+    <span class="s0">public void </span><span class="s1">runOpMode</span><span class="s2">() {</span>
 
-        <span class="s1">applyPIDF</span><span class="s2">();</span>
+        <span class="s4">// Inicializar motor desde el hardwareMap</span>
+        <span class="s1">motor3 </span><span class="s2">= </span><span class="s1">hardwareMap</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">DcMotorEx</span><span class="s2">.</span><span class="s0">class</span><span class="s2">, </span><span class="s3">&quot;motor3&quot;</span><span class="s2">);</span>
+        <span class="s1">motor3</span><span class="s2">.</span><span class="s1">setMode</span><span class="s2">(</span><span class="s1">DcMotor</span><span class="s2">.</span><span class="s1">RunMode</span><span class="s2">.</span><span class="s1">RUN_USING_ENCODER</span><span class="s2">);</span>
 
-        <span class="s1">telemetry</span><span class="s2">.</span><span class="s1">addLine</span><span class="s2">(</span><span class="s3">&quot;Disparador listo&quot;</span><span class="s2">);</span>
-        <span class="s1">telemetry</span><span class="s2">.</span><span class="s1">update</span><span class="s2">();</span>
-    <span class="s2">}</span>
+        <span class="s1">waitForStart</span><span class="s2">();</span>
 
-    <span class="s1">@Override</span>
-    <span class="s0">public void </span><span class="s1">loop</span><span class="s2">() {</span>
+        <span class="s0">while </span><span class="s2">(</span><span class="s1">opModeIsActive</span><span class="s2">()) {</span>
 
-        <span class="s4">// --- Encender / apagar flywheel con RB ---</span>
-        <span class="s0">if </span><span class="s2">(</span><span class="s1">gamepad1</span><span class="s2">.</span><span class="s1">right_bumper</span><span class="s2">) {</span>
-            <span class="s1">flywheelActive </span><span class="s2">= !</span><span class="s1">flywheelActive</span><span class="s2">;</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">gamepad1</span><span class="s2">.</span><span class="s1">a</span><span class="s2">) {</span>
+                <span class="s1">motor3</span><span class="s2">.</span><span class="s1">setVelocity</span><span class="s2">(</span><span class="s5">2100</span><span class="s2">); </span><span class="s4">// ticks por segundo</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">motor3</span><span class="s2">.</span><span class="s1">setVelocity</span><span class="s2">(</span><span class="s5">0</span><span class="s2">);</span>
+            <span class="s2">}</span>
+
+            <span class="s1">telemetry</span><span class="s2">.</span><span class="s1">addData</span><span class="s2">(</span><span class="s3">&quot;Velocidad&quot;</span><span class="s2">, </span><span class="s1">motor3</span><span class="s2">.</span><span class="s1">getVelocity</span><span class="s2">());</span>
+            <span class="s1">telemetry</span><span class="s2">.</span><span class="s1">update</span><span class="s2">();</span>
         <span class="s2">}</span>
-
-        <span class="s4">// --- Cambiar entre velocidad alta y baja con Y ---</span>
-        <span class="s0">if </span><span class="s2">(</span><span class="s1">gamepad1</span><span class="s2">.</span><span class="s1">y</span><span class="s2">) {</span>
-            <span class="s1">curTargetVelocity </span><span class="s2">= (</span><span class="s1">curTargetVelocity </span><span class="s2">== </span><span class="s1">HIGH_VELOCITY</span><span class="s2">) ? </span><span class="s1">LOW_VELOCITY </span><span class="s2">: </span><span class="s1">HIGH_VELOCITY</span><span class="s2">;</span>
-        <span class="s2">}</span>
-
-        <span class="s4">// --- Aplicar velocidad al motor ---</span>
-        <span class="s0">if </span><span class="s2">(</span><span class="s1">flywheelActive</span><span class="s2">) {</span>
-            <span class="s1">flywheelMotor</span><span class="s2">.</span><span class="s1">setVelocity</span><span class="s2">(</span><span class="s1">curTargetVelocity</span><span class="s2">);</span>
-        <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
-            <span class="s1">flywheelMotor</span><span class="s2">.</span><span class="s1">setVelocity</span><span class="s2">(</span><span class="s5">0</span><span class="s2">);</span>
-        <span class="s2">}</span>
-
-        <span class="s4">// --- Telemetría ---</span>
-        <span class="s0">double </span><span class="s1">curVelocity </span><span class="s2">= </span><span class="s1">flywheelMotor</span><span class="s2">.</span><span class="s1">getVelocity</span><span class="s2">();</span>
-        <span class="s0">double </span><span class="s1">error </span><span class="s2">= </span><span class="s1">curTargetVelocity </span><span class="s2">- </span><span class="s1">curVelocity</span><span class="s2">;</span>
-
-        <span class="s1">telemetry</span><span class="s2">.</span><span class="s1">addData</span><span class="s2">(</span><span class="s3">&quot;Flywheel&quot;</span><span class="s2">, </span><span class="s1">flywheelActive </span><span class="s2">? </span><span class="s3">&quot;ENCENDIDO&quot; </span><span class="s2">: </span><span class="s3">&quot;APAGADO&quot;</span><span class="s2">);</span>
-        <span class="s1">telemetry</span><span class="s2">.</span><span class="s1">addData</span><span class="s2">(</span><span class="s3">&quot;Velocidad objetivo&quot;</span><span class="s2">, </span><span class="s1">curTargetVelocity</span><span class="s2">);</span>
-        <span class="s1">telemetry</span><span class="s2">.</span><span class="s1">addData</span><span class="s2">(</span><span class="s3">&quot;Velocidad actual&quot;</span><span class="s2">, </span><span class="s3">&quot;%.2f&quot;</span><span class="s2">, </span><span class="s1">curVelocity</span><span class="s2">);</span>
-        <span class="s1">telemetry</span><span class="s2">.</span><span class="s1">addData</span><span class="s2">(</span><span class="s3">&quot;Error&quot;</span><span class="s2">, </span><span class="s3">&quot;%.2f&quot;</span><span class="s2">, </span><span class="s1">error</span><span class="s2">);</span>
-        <span class="s1">telemetry</span><span class="s2">.</span><span class="s1">addData</span><span class="s2">(</span><span class="s3">&quot;¿Listo para disparar?&quot;</span><span class="s2">, </span><span class="s1">Math</span><span class="s2">.</span><span class="s1">abs</span><span class="s2">(</span><span class="s1">error</span><span class="s2">) &lt; </span><span class="s5">50 </span><span class="s2">? </span><span class="s3">&quot;SÍ ✓&quot; </span><span class="s2">: </span><span class="s3">&quot;NO...&quot;</span><span class="s2">);</span>
-        <span class="s1">telemetry</span><span class="s2">.</span><span class="s1">update</span><span class="s2">();</span>
-    <span class="s2">}</span>
-
-    <span class="s0">private void </span><span class="s1">applyPIDF</span><span class="s2">() {</span>
-        <span class="s1">PIDFCoefficients pidf </span><span class="s2">= </span><span class="s0">new </span><span class="s1">PIDFCoefficients</span><span class="s2">(</span><span class="s1">P</span><span class="s2">, </span><span class="s5">0</span><span class="s2">, </span><span class="s5">0</span><span class="s2">, </span><span class="s1">F</span><span class="s2">);</span>
-        <span class="s1">flywheelMotor</span><span class="s2">.</span><span class="s1">setPIDFCoefficients</span><span class="s2">(</span><span class="s1">DcMotor</span><span class="s2">.</span><span class="s1">RunMode</span><span class="s2">.</span><span class="s1">RUN_USING_ENCODER</span><span class="s2">, </span><span class="s1">pidf</span><span class="s2">);</span>
     <span class="s2">}</span>
 <span class="s2">}</span></pre>
 </body>

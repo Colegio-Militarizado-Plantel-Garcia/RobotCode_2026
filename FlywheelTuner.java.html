@@ -16,22 +16,21 @@
 <font face="Arial, Helvetica" color="#000000">
 FlywheelTuner.java</font>
 </center></td></tr></table>
-<pre><span class="s0">package </span><span class="s1">org</span><span class="s2">.</span><span class="s1">firstinspires</span><span class="s2">.</span><span class="s1">ftc</span><span class="s2">.</span><span class="s1">teamcode</span><span class="s2">;</span>
+<pre><span class="s0">package </span><span class="s1">org</span><span class="s2">.</span><span class="s1">firstinspires</span><span class="s2">.</span><span class="s1">ftc</span><span class="s2">.</span><span class="s1">teamcode</span><span class="s2">.</span><span class="s1">DriverHub</span><span class="s2">;</span>
 
 <span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">qualcomm</span><span class="s2">.</span><span class="s1">robotcore</span><span class="s2">.</span><span class="s1">eventloop</span><span class="s2">.</span><span class="s1">opmode</span><span class="s2">.</span><span class="s1">OpMode</span><span class="s2">;</span>
 <span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">qualcomm</span><span class="s2">.</span><span class="s1">robotcore</span><span class="s2">.</span><span class="s1">eventloop</span><span class="s2">.</span><span class="s1">opmode</span><span class="s2">.</span><span class="s1">TeleOp</span><span class="s2">;</span>
 <span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">qualcomm</span><span class="s2">.</span><span class="s1">robotcore</span><span class="s2">.</span><span class="s1">hardware</span><span class="s2">.</span><span class="s1">DcMotor</span><span class="s2">;</span>
 <span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">qualcomm</span><span class="s2">.</span><span class="s1">robotcore</span><span class="s2">.</span><span class="s1">hardware</span><span class="s2">.</span><span class="s1">DcMotorEx</span><span class="s2">;</span>
 <span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">qualcomm</span><span class="s2">.</span><span class="s1">robotcore</span><span class="s2">.</span><span class="s1">hardware</span><span class="s2">.</span><span class="s1">DcMotorSimple</span><span class="s2">;</span>
-<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">qualcomm</span><span class="s2">.</span><span class="s1">robotcore</span><span class="s2">.</span><span class="s1">hardware</span><span class="s2">.</span><span class="s1">PIDCoefficients</span><span class="s2">;</span>
 <span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">qualcomm</span><span class="s2">.</span><span class="s1">robotcore</span><span class="s2">.</span><span class="s1">hardware</span><span class="s2">.</span><span class="s1">PIDFCoefficients</span><span class="s2">;</span>
 
 <span class="s1">@TeleOp</span>
 <span class="s0">public class </span><span class="s1">FlywheelTuner </span><span class="s0">extends </span><span class="s1">OpMode </span><span class="s2">{</span>
     <span class="s0">public </span><span class="s1">DcMotorEx flywheelMotor</span><span class="s2">;</span>
 
-    <span class="s0">public double </span><span class="s1">highVelocity</span><span class="s2">=</span><span class="s3">1500</span><span class="s2">;</span>
-    <span class="s0">public double </span><span class="s1">lowVelocity</span><span class="s2">=</span><span class="s3">900</span><span class="s2">;</span>
+    <span class="s0">public double </span><span class="s1">highVelocity</span><span class="s2">=</span><span class="s3">2100</span><span class="s2">;</span>
+    <span class="s0">public double </span><span class="s1">lowVelocity</span><span class="s2">=</span><span class="s3">1000</span><span class="s2">;</span>
     <span class="s0">double </span><span class="s1">curTargetVelocity</span><span class="s2">=</span><span class="s1">highVelocity</span><span class="s2">;</span>
 
     <span class="s0">double </span><span class="s1">F </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>

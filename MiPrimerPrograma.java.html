@@ -1,0 +1,83 @@
+<html>
+<head>
+<title>MiPrimerPrograma.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #bcbec4;}
+.s1 { color: #cf8e6d;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #7a7e85;}
+.s5 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+MiPrimerPrograma.java</font>
+</center></td></tr></table>
+<pre>
+<span class="s1">package </span><span class="s0">org</span><span class="s2">.</span><span class="s0">firstinspires</span><span class="s2">.</span><span class="s0">ftc</span><span class="s2">.</span><span class="s0">teamcode</span><span class="s2">;</span>
+
+<span class="s1">import </span><span class="s0">com</span><span class="s2">.</span><span class="s0">qualcomm</span><span class="s2">.</span><span class="s0">robotcore</span><span class="s2">.</span><span class="s0">eventloop</span><span class="s2">.</span><span class="s0">opmode</span><span class="s2">.</span><span class="s0">LinearOpMode</span><span class="s2">;</span>
+<span class="s1">import </span><span class="s0">com</span><span class="s2">.</span><span class="s0">qualcomm</span><span class="s2">.</span><span class="s0">robotcore</span><span class="s2">.</span><span class="s0">eventloop</span><span class="s2">.</span><span class="s0">opmode</span><span class="s2">.</span><span class="s0">TeleOp</span><span class="s2">;</span>
+<span class="s1">import </span><span class="s0">com</span><span class="s2">.</span><span class="s0">qualcomm</span><span class="s2">.</span><span class="s0">robotcore</span><span class="s2">.</span><span class="s0">hardware</span><span class="s2">.</span><span class="s0">DcMotor</span><span class="s2">;</span>
+<span class="s1">import </span><span class="s0">com</span><span class="s2">.</span><span class="s0">qualcomm</span><span class="s2">.</span><span class="s0">robotcore</span><span class="s2">.</span><span class="s0">hardware</span><span class="s2">.</span><span class="s0">DcMotorSimple</span><span class="s2">;</span>
+<span class="s1">import </span><span class="s0">com</span><span class="s2">.</span><span class="s0">qualcomm</span><span class="s2">.</span><span class="s0">robotcore</span><span class="s2">.</span><span class="s0">util</span><span class="s2">.</span><span class="s0">Range</span><span class="s2">;</span>
+
+
+<span class="s0">@TeleOp</span><span class="s2">(</span><span class="s0">name </span><span class="s2">= </span><span class="s3">&quot;MiPrimerPrograma&quot;</span><span class="s2">, </span><span class="s0">group</span><span class="s2">=</span><span class="s3">&quot;pruebas william&quot;</span><span class="s2">)</span>
+<span class="s1">public class </span><span class="s0">MiPrimerPrograma </span><span class="s1">extends </span><span class="s0">LinearOpMode </span><span class="s2">{</span>
+
+  <span class="s4">// Declarar variables</span>
+    <span class="s0">DcMotor motorIzquierdo</span><span class="s2">;</span>
+    <span class="s0">DcMotor motorDerecho</span><span class="s2">;</span>
+
+    <span class="s1">double </span><span class="s0">valorpalancaizquierda</span><span class="s2">, </span><span class="s0">valorpalancaderecha</span><span class="s2">;</span>
+    <span class="s1">double </span><span class="s0">podermotorizquierdo</span><span class="s2">, </span><span class="s0">podermotorderecho</span><span class="s2">;</span>
+
+    <span class="s0">@Override</span>
+    <span class="s1">public void </span><span class="s0">runOpMode</span><span class="s2">() {</span>
+
+        <span class="s4">// Inicializar las variables</span>
+
+
+
+
+       <span class="s0">motorIzquierdo </span><span class="s2">= </span><span class="s0">hardwareMap</span><span class="s2">.</span><span class="s0">dcMotor</span><span class="s2">.</span><span class="s0">get</span><span class="s2">(</span><span class="s3">&quot;mI&quot;</span><span class="s2">);</span>
+       <span class="s0">motorDerecho </span><span class="s2">= </span><span class="s0">hardwareMap</span><span class="s2">.</span><span class="s0">dcMotor</span><span class="s2">.</span><span class="s0">get</span><span class="s2">(</span><span class="s3">&quot;mD&quot;</span><span class="s2">);</span>
+
+       <span class="s0">motorIzquierdo</span><span class="s2">.</span><span class="s0">setDirection</span><span class="s2">(</span><span class="s0">DcMotorSimple</span><span class="s2">.</span><span class="s0">Direction</span><span class="s2">.</span><span class="s0">REVERSE</span><span class="s2">);</span>
+       <span class="s0">motorDerecho</span><span class="s2">.</span><span class="s0">setDirection</span><span class="s2">(</span><span class="s0">DcMotorSimple</span><span class="s2">.</span><span class="s0">Direction</span><span class="s2">.</span><span class="s0">FORWARD</span><span class="s2">);</span>
+
+       <span class="s0">motorIzquierdo</span><span class="s2">.</span><span class="s0">setZeroPowerBehavior</span><span class="s2">(</span><span class="s0">DcMotor</span><span class="s2">.</span><span class="s0">ZeroPowerBehavior</span><span class="s2">.</span><span class="s0">BRAKE</span><span class="s2">);</span>
+       <span class="s0">motorDerecho</span><span class="s2">.</span><span class="s0">setZeroPowerBehavior</span><span class="s2">(</span><span class="s0">DcMotor</span><span class="s2">.</span><span class="s0">ZeroPowerBehavior</span><span class="s2">.</span><span class="s0">BRAKE</span><span class="s2">);</span>
+
+
+       <span class="s0">waitForStart</span><span class="s2">();</span>
+
+        <span class="s1">while </span><span class="s2">(</span><span class="s0">opModeIsActive</span><span class="s2">()) {</span>
+
+       <span class="s4">//Hacer las funciones que queremos que haga el robot</span>
+
+        <span class="s4">// Queremos que el robot se mueva, dependiendo de lo que pongamos dentro del control.</span>
+
+
+          <span class="s0">valorpalancaizquierda </span><span class="s2">= -</span><span class="s0">gamepad1</span><span class="s2">.</span><span class="s0">left_stick_y</span><span class="s2">;</span>
+          <span class="s0">valorpalancaderecha </span><span class="s2">= </span><span class="s0">gamepad1</span><span class="s2">.</span><span class="s0">right_stick_x</span><span class="s2">;</span>
+
+          <span class="s0">podermotorizquierdo </span><span class="s2">= </span><span class="s0">valorpalancaizquierda </span><span class="s2">- </span><span class="s0">valorpalancaderecha</span><span class="s2">;</span>
+          <span class="s0">podermotorderecho </span><span class="s2">= </span><span class="s0">valorpalancaizquierda </span><span class="s2">+ </span><span class="s0">valorpalancaderecha</span><span class="s2">;</span>
+
+          <span class="s0">podermotorizquierdo </span><span class="s2">= </span><span class="s0">Range</span><span class="s2">.</span><span class="s0">clip</span><span class="s2">(</span><span class="s0">podermotorizquierdo</span><span class="s2">,-</span><span class="s5">1.0</span><span class="s2">, </span><span class="s5">1.0</span><span class="s2">);</span>
+          <span class="s0">podermotorderecho </span><span class="s2">= </span><span class="s0">Range</span><span class="s2">.</span><span class="s0">clip</span><span class="s2">(</span><span class="s0">podermotorderecho</span><span class="s2">, -</span><span class="s5">1.0</span><span class="s2">, </span><span class="s5">1.0</span><span class="s2">);</span>
+
+          <span class="s0">motorIzquierdo</span><span class="s2">.</span><span class="s0">setPower</span><span class="s2">(</span><span class="s0">podermotorizquierdo</span><span class="s2">);</span>
+          <span class="s0">motorDerecho</span><span class="s2">.</span><span class="s0">setPower</span><span class="s2">(</span><span class="s0">podermotorderecho</span><span class="s2">);</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>
